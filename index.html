@@ -4,34 +4,62 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Invoice Generator</title>
-    <link rel="stylesheet" href="styles.css">
+    <script src="https://unpkg.com/jspdf@latest/dist/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.10/jspdf.plugin.autotable.min.js"></script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #000;
+            padding: 8px;
+            text-align: left;
+        }
+        #invoiceOutput {
+            display: none;
+            margin-top: 20px;
+        }
+        #downloadButton {
+            display: none;
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Invoice Generator</h1>
-        <form id="invoiceForm">
-            <div class="form-group">
-                <label for="year">Year:</label>
-                <input type="number" id="year" name="year" required>
-            </div>
-            <div class="form-group">
-                <label for="month">Month:</label>
-                <input type="number" id="month" name="month" required>
-            </div>
-            <div class="form-group">
-                <label for="price_per_tea">Price per Tea:</label>
-                <input type="number" id="price_per_tea" name="price_per_tea" value="10">
-            </div>
-            <div class="form-group">
-                <label for="exclude_date_picker">Exclude Dates:</label>
-                <input type="date" id="exclude_date_picker">
-                <button type="button" id="add_date_button">Add Excluded Date</button>
-                <ul id="excluded_dates_list"></ul>
-            </div>
-            <button type="submit">Generate Invoice</button>
-        </form>
-        <div id="invoiceOutput" class="invoice-output" style="display:none;"></div>
-    </div>
-    <script src="script.js"></script>
+
+<h1>Invoice Generator</h1>
+
+<form id="invoiceForm">
+    <label for="year">Year:</label>
+    <input type="number" id="year" required><br><br>
+
+    <label for="month">Month (1-12):</label>
+    <input type="number" id="month" required min="1" max="12"><br><br>
+
+    <label for="price_per_tea">Price per Tea (₹):</label>
+    <input type="number" id="price_per_tea" required step="0.01"><br><br>
+
+    <label for="quantity_per_day">Quantity per Day:</label>
+    <input type="number" id="quantity_per_day" required><br><br>
+
+    <label for="exclude_date_picker">Exclude Dates:</label>
+    <input type="date" id="exclude_date_picker">
+    <button type="button" id="add_date_button">Add Excluded Date</button>
+    <ul id="excluded_dates_list"></ul><br>
+
+    <button type="submit">Generate Invoice</button>
+</form>
+
+<div id="invoiceOutput"></div>
+<button id="downloadButton">Download PDF</button>
+
+<script src="index.js"></script>
 </body>
 </html>
